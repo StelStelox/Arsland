@@ -1,6 +1,6 @@
 {
-    "name": "aurora-launcher-app",
-    "version": "0.0.5-dev",
+    "name": "Arsland-Launcher-app",
+    "version": "0.0.1-dev",
     "description": "Launcher for Minecraft",
     "main": "build/main/index-obf.loader.js",
     "private": true,
@@ -91,14 +91,14 @@
         }
     },
     "build": {
-        "appId": "ru.aurora.launcher",
-        "productName": "Aurora Launcher",
+        "appId": "ru.arsland.launcher",
+        "productName": "Arsland Launcher",
         "publish": [
             {
                 "provider": "github",
                 "releaseType": "release",
-                "owner": "AuroraTeam",
-                "repo": "Launcher"
+                "owner": "StelStelox",
+                "repo": "Arsland"
             }
         ],
         "directories": {
@@ -113,6 +113,14 @@
         ],
         "nsis": {
             "artifactName": "${name}-Setup-${version}.${ext}"
+        },
+        "win": {
+            "target": "nsis",
+            "signingHashAlgorithms": [
+                "sha256"
+            ],
+            "certificateFile": "./ssl/ArslandLauncher_CS.pfx",
+            "certificatePassword": "IWdD!n &*#@n _#HNcne_"
         },
         "mac": {
             "category": "public.app-category.games"

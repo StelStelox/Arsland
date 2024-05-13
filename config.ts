@@ -5,32 +5,32 @@ export const window = {
     width: 900,
     height: 550,
     frame: false,
-    resizable: false,
+    resizable: true,
     maximizable: false,
-    fullscreenable: false,
-    title: 'Aurora Launcher',
+    fullscreenable: true,
+    title: 'Arsland Launcher',
 };
 
 export const api = {
-    ws: 'ws://127.0.0.1:1370/ws',
-    web: 'http://127.0.0.1:1370',
+    ws: 'ws://94.241.143.118:1370/ws',
+    web: 'http://94.241.143.118:1370',
     publicKey,
 };
 
-export const appPath = '.aurora-launcher';
+export const appPath = '.arsland-launcher';
 
 export const discordRPC = {
-    appId: '1214685301793103902',
-    firstLineText: 'Тестирую лаунчер',
-    secondLineText: 'Чувак, ты думал здесь что-то будет?',
+    appId: '1170138720276598886',
+    firstLineText: 'Мир с индустриальной революции',
+    secondLineText: 'Minecarft проект с Create',
     buttons: [
         {
-            label: 'Прекол',
-            url: 'https://youtu.be/dQw4w9WgXcQ',
+            label: 'Discord',
+            url: 'https://discord.gg/e3X5AbSfsj',
         },
     ],
-    largeImageKey: 'logo',
-    smallImageKey: 'logo_mc',
-    largeImageText: 'Aurora Launcher',
+    largeImageKey: 'big_icon',
+    smallImageKey: 'small_icon',
+    largeImageText: 'Arsland Launcher',
     smallImageText: 'Minecraft',
 };
