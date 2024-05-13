@@ -1,0 +1,134 @@
+{
+    "name": "aurora-launcher-app",
+    "version": "0.0.5-dev",
+    "description": "Launcher for Minecraft",
+    "main": "build/main/index-obf.loader.js",
+    "private": true,
+    "scripts": {
+        "dev": "concurrently -i -n electron,main,preload,renderer -c cyan.bold,blue.bold,yellow.bold,magenta.bold \"npm:start:dev\" \"npm:build:main -- --watch --sourcemap=inline\" \"npm:build:preload -- --watch --sourcemap=inline\" \"vite\"",
+        "build": "concurrently -n main,preload,renderer -c blue.bold,yellow.bold,magenta.bold \"npm:build:main-compile\" \"npm:build:preload\" \"npm:build:renderer\" --kill-others-on-fail",
+        "build:main": "node build.mjs",
+        "build:main-compile": "npm run build:main && npm run obfuscator && npm run bytenode",
+        "build:preload": "esbuild src/preload/index.ts --platform=node --bundle --outdir=build/preload --external:electron --format=iife",
+        "build:renderer": "tsc && vite build",
+        "start:dev": "cross-env DEV=true nodemon --watch src --ext ts,tsx --ignore 'src/renderer' --exec npm run start:prod",
+        "start:prod": "electron build/main/index.js",
+        "clean": "rimraf build out",
+        "prettier": "prettier --config .prettierrc.json --write src",
+        "typecheck": "tsc --noEmit",
+        "lint": "eslint src --ext .ts,.tsx",
+        "lint:fix": "npm run lint -- --fix",
+        "pack": "electron-builder --dir",
+        "release": "electron-builder",
+        "obfuscator": "javascript-obfuscator build/main/index.js --output build/main/index-obf.js --split-strings true --split-strings-chunk-length 8",
+        "bytenode": "bytenode -c build/main/index-obf.js -e -l --compress"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/AuroraTeam/Launcher.git"
+    },
+    "author": "AuroraTeam",
+    "contributors": [
+        "JoCat (https://github.com/JoCat)"
+    ],
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/AuroraTeam/Launcher/issues"
+    },
+    "homepage": "https://github.com/AuroraTeam/Launcher#readme",
+    "devDependencies": {
+        "@aurora-launcher/esbuild-decorators": "^0.0.1",
+        "@types/node": "^20.11.24",
+        "@types/react": "^18.2.63",
+        "@types/react-dom": "^18.2.20",
+        "@types/semver": "^7.5.8",
+        "@types/tar": "^6.1.11",
+        "@types/ws": "^8.5.10",
+        "@typescript-eslint/eslint-plugin": "^7.1.1",
+        "@typescript-eslint/parser": "^7.1.1",
+        "@vitejs/plugin-react": "^4.2.1",
+        "concurrently": "^8.2.2",
+        "cross-env": "^7.0.3",
+        "electron": "29.2.0",
+        "electron-builder": "^24.13.3",
+        "electron-extension-installer": "^1.2.0",
+        "esbuild": "^0.20.1",
+        "eslint": "^8.56.0",
+        "eslint-plugin-react": "^7.34.0",
+        "import-sort-style-module": "^6.0.0",
+        "javascript-obfuscator": "^4.1.0",
+        "minimist": "^1.2.8",
+        "nodemon": "^3.1.0",
+        "prettier": "^3.2.5",
+        "prettier-plugin-import-sort": "^0.0.7",
+        "rimraf": "^5.0.5",
+        "sass": "^1.71.1",
+        "source-map-support": "^0.5.21",
+        "typescript": "^5.3.3",
+        "vite": "^5.1.5"
+    },
+    "dependencies": {
+        "@aurora-launcher/api": "^0.4.0",
+        "@aurora-launcher/core": "^0.22.0",
+        "@xhayper/discord-rpc": "^1.1.2",
+        "bytenode": "^1.5.4",
+        "chokidar": "^3.6.0",
+        "electron-updater": "^6.1.8",
+        "minestat-es": "^1.1.4",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^6.22.2",
+        "recoil": "^0.7.7",
+        "reflect-metadata": "^0.2.1",
+        "semver": "^7.6.0",
+        "skinview3d": "^3.0.1",
+        "typedi": "^0.10.0"
+    },
+    "importSort": {
+        ".tsx, .ts, .mjs, .js": {
+            "style": "module",
+            "parser": "typescript"
+        }
+    },
+    "build": {
+        "appId": "ru.aurora.launcher",
+        "productName": "Aurora Launcher",
+        "publish": [
+            {
+                "provider": "github",
+                "releaseType": "release",
+                "owner": "AuroraTeam",
+                "repo": "Launcher"
+            }
+        ],
+        "directories": {
+            "buildResources": "resources"
+        },
+        "files": [
+            "build/**/*",
+            "!build/main/index.js",
+            "!build/main/index-obf.js",
+            "!node_modules/**/*",
+            "node_modules/bytenode/**/*"
+        ],
+        "nsis": {
+            "artifactName": "${name}-Setup-${version}.${ext}"
+        },
+        "mac": {
+            "category": "public.app-category.games"
+        },
+        "linux": {
+            "target": [
+                "deb",
+                "rpm",
+                "AppImage"
+            ],
+            "category": "Game",
+            "maintainer": "AuroraTeam <null@aurora-team.ru>"
+        }
+    },
+    "optionalDependencies": {
+        "@swc/core-linux-x64-gnu": "^1.4.5",
+        "@swc/core-linux-x64-musl": "^1.4.5"
+    }
+}
