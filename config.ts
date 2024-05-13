@@ -12,8 +12,8 @@ export const window = {
 };
 
 export const api = {
-    ws: 'ws://94.241.143.118:1370/ws',
-    web: 'http://94.241.143.118:1370',
+    ws: 'ws://185.177.216.14:1370/ws',
+    web: 'http://185.177.216.14:1370',
     publicKey,
 };
 
